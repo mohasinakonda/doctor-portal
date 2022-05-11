@@ -8,7 +8,7 @@ const Testimonial = () => {
 			className="grid lg:grid-cols-2 items-center pt-6 sm:justify-center md:grid-cols-1 "
 		>
 			<div>
-				<img className="mt-[-150px] hidden lg:block" src={doctor} alt="" />
+				<img className="mt-[-200px] hidden lg:block" src={doctor} alt="" />
 			</div>
 			<div className="sm:p-4 sm:w-full">
 				<h3 className="text-secondary text-xl font-bold">Appointment</h3>

@@ -1,12 +1,12 @@
 import React from "react"
-import doctor from "../assets/images/doctor-small.png"
+import treatment from "../assets/images/treatment.png"
 
-const DoctorInfo = () => {
+const Treatment = () => {
 	return (
-		<div class="hero min-h-screen ">
-			<div class="hero-content flex-col lg:flex-row">
-				<img src={doctor} alt="" class="max-w-sm rounded-lg shadow-2xl" />
-				<div>
+		<div class="hero min-h-screen pt-5  ">
+			<div class="hero-content flex-col lg:flex-row w-50%">
+				<img src={treatment} alt="" class="max-w-sm rounded-lg shadow-2xl" />
+				<div className="px-5">
 					<h1 class="text-5xl font-bold">
 						Exceptional Dental Care, on Your Terms
 					</h1>
@@ -27,4 +27,4 @@ const DoctorInfo = () => {
 	)
 }
 
-export default DoctorInfo
+export default Treatment

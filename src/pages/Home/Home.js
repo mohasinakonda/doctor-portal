@@ -1,8 +1,10 @@
 import React from "react"
 import Banner from "./Banner"
-import DoctorInfo from "./DoctorInfo"
+import Treatment from "./Treatment"
 import Info from "./Info"
 import Services from "./Services/Services"
+import Testimonial from "./Testimonial"
+import CustomersReviews from "./CustomersReviews"
 
 const Home = () => {
 	return (
@@ -11,7 +13,9 @@ const Home = () => {
 			<hr />
 			<Info></Info>
 			<Services></Services>
-			<DoctorInfo></DoctorInfo>
+			<Treatment></Treatment>
+			<Testimonial></Testimonial>
+			<CustomersReviews></CustomersReviews>
 		</div>
 	)
 }

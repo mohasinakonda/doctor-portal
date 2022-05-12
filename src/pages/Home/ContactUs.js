@@ -9,12 +9,12 @@ const ContactUs = () => {
 				<input
 					type="email"
 					placeholder="Email address"
-					class="input input-bordered input-secondary w-3/4 mx-auto"
+					className="input input-bordered input-secondary w-3/4 mx-auto"
 				/>
 				<input
 					type="text"
 					placeholder="Subject"
-					class="input input-bordered input-secondary w-3/4 mx-auto"
+					className="input input-bordered input-secondary w-3/4 mx-auto"
 				/>
 				<textarea
 					name=""
@@ -22,7 +22,7 @@ const ContactUs = () => {
 					cols="30"
 					rows="10"
 					placeholder="massage"
-					class="input input-bordered input-secondary w-3/4 mx-auto "
+					className="input input-bordered input-secondary w-3/4 mx-auto "
 				></textarea>
 				<input
 					type="submit"

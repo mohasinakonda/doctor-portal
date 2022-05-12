@@ -10,8 +10,8 @@ const InfoCart = ({ info }) => {
 				<figure className="px-5">
 					<img src={info.img} alt="Album" />
 				</figure>
-				<div class="card-body">
-					<h2 class="card-title">{info.title}</h2>
+				<div className="card-body">
+					<h2 className="card-title">{info.title}</h2>
 					<p>Click the button to listen on Spotiwhy app.</p>
 				</div>
 			</div>

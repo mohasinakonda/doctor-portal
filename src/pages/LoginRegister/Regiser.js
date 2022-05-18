@@ -1,9 +1,31 @@
 import React from 'react';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { Link } from 'react-router-dom';
 import auth from '../../firebase.init'
-// import {useSignWithGoogle} from 'react-firebase-hooks'
-const Login = () => {
+
+const Register = () => {
+    const [signInWithGoogle, Googleuser, Googleloading] = useSignInWithGoogle(auth);
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useCreateUserWithEmailAndPassword(auth);
+    let errors
+    if (error) {
+        errors = error?.message
+    }
+    const handleRegister = (event) => {
+        event.preventDefault()
+        const name = event.target.name.value
+        const email = event.target.email.value
+        const password = event.target.password.value
+
+        createUserWithEmailAndPassword(email, password)
+        event.target.reset()
+    }
     const signWithGoogle = () => {
-        // const [signWithGoogle]=SignWithGoogle(auth)
+        signInWithGoogle()
     }
 
     return (
@@ -14,14 +36,22 @@ const Login = () => {
             <div className='w-[50%] mx-auto m-5'  >
                 <div className='card bg-base-100 shadow-xl '>
 
-                    <form className=' grid grid-cols-1 gap-3 mx-auto  w-[100%] px-5'>
+                    <form onSubmit={handleRegister} className=' grid grid-cols-1 gap-3 mx-auto  w-[100%] px-5'>
+
+                        <label htmlFor="name"> Name</label>
+                        <input name='name' type="text" placeholder="Enter your name" class="input  input-bordered input-primary  " />
+
                         <label htmlFor="email"> Email</label>
                         <input name='email' type="email" placeholder="Enter your Email" class="input  input-bordered input-primary  " />
-                        <label htmlFor="password"> Email</label>
+
+
+                        <label htmlFor="password"> Password</label>
 
                         <input type="password" name='password' placeholder="password" class="input  input-bordered input-primary w-[100%]  " />
                         <input type="submit" value='submit' className='btn btn-secondary' />
+                        <p className='text-error'>{errors}</p>
                     </form>
+                    <p className='p-5'>Alredy have an accound ? <Link to='/login' className='text-primary '>Login here</Link></p>
                     <div class="divider">OR</div>
                     <div className='p-5'>
 
@@ -35,4 +65,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;

@@ -5,7 +5,9 @@ import Home from "./pages/Home/Home"
 import Login from "./pages/LoginRegister/Login"
 import Register from "./pages/LoginRegister/Regiser"
 import Navbar from "./pages/Shared/Navbar"
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import RequireAuth from "./RequireAuth"
 function App() {
 	return (
 		<div className="px-12 max-w-7xl mx-auto">
@@ -17,9 +19,14 @@ function App() {
 
 				<Route
 					path="/appointment"
-					element={<Appointment></Appointment>}
+					element={
+						<RequireAuth>
+							<Appointment></Appointment>
+						</RequireAuth>
+					}
 				></Route>
 			</Routes>
+			<ToastContainer></ToastContainer>
 		</div>
 	)
 }

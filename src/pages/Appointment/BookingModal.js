@@ -1,12 +1,34 @@
 import { format } from "date-fns"
 import React from "react"
+import { toast } from "react-toastify"
 
 const BookingModal = ({ treatment, setTreatment, date }) => {
 	const { _id, name, slots } = treatment
 	const handleBooking = (event) => {
 		event.preventDefault()
+		const treatmentName = treatment.name
+		const name = event.target.name.value
+		const email = event.target.email.value
+		const phone = event.target.phone.value
+		const date = event.target.date.value
 		const slot = event.target.slot.value
-		console.log(_id, slot, name)
+		const bookings = { treatmentName, name, email, phone, date, slot }
+		fetch('http://localhost:5000/booking', {
+			method: "post",
+			headers: {
+				'content-type': 'application/json'
+			},
+			body: JSON.stringify(bookings)
+		}).then(res => res.json())
+			.then(data => {
+
+				if (data.success) {
+					toast.success('your appointment is confirm')
+				} else {
+					toast.error('your appointment is  already exist')
+				}
+				console.log(data)
+			})
 		setTreatment(null)
 	}
 	return (
@@ -29,6 +51,7 @@ const BookingModal = ({ treatment, setTreatment, date }) => {
 						<input
 							type="text"
 							value={format(date, "PP")}
+							name='date'
 							disabled
 							readOnly
 							class="input input-bordered input-secondary w-full "
@@ -50,17 +73,20 @@ const BookingModal = ({ treatment, setTreatment, date }) => {
 						</select>
 						<input
 							type="text"
+							name='name'
 							placeholder="Full name"
 							class="input input-bordered input-secondary w-full "
 						/>
 						<input
-							type="text"
-							placeholder="Phone number"
+							type="email"
+							name='email'
+							placeholder="Email"
 							class="input input-bordered input-secondary w-full "
 						/>
 						<input
-							type="email"
-							placeholder="Email"
+							type="text"
+							name='phone'
+							placeholder="Phone number"
 							class="input input-bordered input-secondary w-full "
 						/>
 						<input

@@ -1,9 +1,12 @@
 import { format } from "date-fns"
 import React from "react"
 import { toast } from "react-toastify"
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from "../../firebase.init";
+const BookingModal = ({ treatment, setTreatment, date, refetch }) => {
+	const { name, avialable } = treatment
+	const [user] = useAuthState(auth)
 
-const BookingModal = ({ treatment, setTreatment, date }) => {
-	const { _id, name, slots } = treatment
 	const handleBooking = (event) => {
 		event.preventDefault()
 		const treatmentName = treatment.name
@@ -23,12 +26,14 @@ const BookingModal = ({ treatment, setTreatment, date }) => {
 			.then(data => {
 
 				if (data.success) {
+					refetch()
 					toast.success('your appointment is confirm')
 				} else {
 					toast.error('your appointment is  already exist')
 				}
 				console.log(data)
 			})
+
 		setTreatment(null)
 	}
 	return (
@@ -58,7 +63,7 @@ const BookingModal = ({ treatment, setTreatment, date }) => {
 						/>
 						<input
 							type="text"
-							value={slots[0]}
+							value={avialable[0]}
 							disabled
 							readOnly
 							class="input input-bordered input-secondary w-full "
@@ -67,20 +72,25 @@ const BookingModal = ({ treatment, setTreatment, date }) => {
 							name="slot"
 							class="select w-full input-bordered input-secondary  "
 						>
-							{slots.map((slot) => (
+							{avialable.map((slot) => (
 								<option value={slot}>{slot}</option>
 							))}
 						</select>
 						<input
 							type="text"
 							name='name'
-							placeholder="Full name"
+
+							value={user.displayName || 'unknown'}
+							disabled
+							readOnly
 							class="input input-bordered input-secondary w-full "
 						/>
 						<input
 							type="email"
 							name='email'
-							placeholder="Email"
+							value={user.email}
+							disabled
+							readOnly
 							class="input input-bordered input-secondary w-full "
 						/>
 						<input
@@ -91,7 +101,7 @@ const BookingModal = ({ treatment, setTreatment, date }) => {
 						/>
 						<input
 							type="submit"
-							value="submit"
+							value="book"
 							class=" btn bg-secondary w-full text-white "
 						/>
 					</form>

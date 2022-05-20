@@ -1,27 +1,36 @@
-import React from 'react';
-import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import React, { useState } from 'react';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
 import auth from '../../firebase.init'
+import Spinner from '../Shared/Spinner';
 
 const Register = () => {
     const [signInWithGoogle, Googleuser, Googleloading] = useSignInWithGoogle(auth);
+    const [updateProfile, updating] = useUpdateProfile(auth);
+    const [userName, setUserName] = useState('')
     const [
         createUserWithEmailAndPassword,
         user,
         loading,
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
+    const handleName = (event) => {
+        setUserName(event.target.value)
+    }
+    if (Googleloading || updating || loading) {
+        return <Spinner></Spinner>
+    }
     let errors
     if (error) {
         errors = error?.message
     }
-    const handleRegister = (event) => {
+    const handleRegister = async (event) => {
         event.preventDefault()
         const name = event.target.name.value
         const email = event.target.email.value
         const password = event.target.password.value
-
-        createUserWithEmailAndPassword(email, password)
+        await updateProfile({ displayName: userName })
+        await createUserWithEmailAndPassword(email, password)
         event.target.reset()
     }
     const signWithGoogle = () => {
@@ -39,7 +48,7 @@ const Register = () => {
                     <form onSubmit={handleRegister} className=' grid grid-cols-1 gap-3 mx-auto  w-[100%] px-5'>
 
                         <label htmlFor="name"> Name</label>
-                        <input name='name' type="text" placeholder="Enter your name" class="input  input-bordered input-primary  " />
+                        <input onChange={handleName} name='name' type="text" placeholder="Enter your name" class="input  input-bordered input-primary  " />
 
                         <label htmlFor="email"> Email</label>
                         <input name='email' type="email" placeholder="Enter your Email" class="input  input-bordered input-primary  " />

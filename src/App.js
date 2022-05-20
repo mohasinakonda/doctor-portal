@@ -8,6 +8,7 @@ import Navbar from "./pages/Shared/Navbar"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import RequireAuth from "./RequireAuth"
+import Deshboard from "./pages/Deshboard/Deshboard"
 function App() {
 	return (
 		<div className="px-12 max-w-7xl mx-auto">
@@ -22,6 +23,14 @@ function App() {
 					element={
 						<RequireAuth>
 							<Appointment></Appointment>
+						</RequireAuth>
+					}
+				></Route>
+				<Route
+					path="/deshboard"
+					element={
+						<RequireAuth>
+							<Deshboard></Deshboard>
 						</RequireAuth>
 					}
 				></Route>

@@ -1,8 +1,9 @@
 import React from 'react';
 
 const Spinner = () => {
-    return <div class="spinner-grow inline-block w-12 h-12 bg-secondary rounded-full opacity-0" role="status">
-        <span class="visually-hidden">Loading...</span>
+    return <div class="flex items-center justify-center space-x-2 animate-bounce mt-10">
+
+        <div class="w-12 h-12 bg-secondary rounded-full"></div>
     </div>
 };
 

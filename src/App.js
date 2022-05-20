@@ -9,14 +9,22 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import RequireAuth from "./RequireAuth"
 import Deshboard from "./pages/Deshboard/Deshboard"
+import AvialbleAppointment from "./pages/Deshboard/AvialbleAppointment"
+import Doctors from "./pages/Deshboard/Doctors"
+import History from "./pages/Deshboard/History"
+import LoginAndREegister from "./pages/LoginRegister/LoginAndREegister"
 function App() {
 	return (
 		<div className="px-12 max-w-7xl mx-auto">
 			<Navbar></Navbar>
 			<Routes>
 				<Route path="/" element={<Home></Home>}></Route>
-				<Route path="/login" element={<Login></Login>}></Route>
-				<Route path="/register" element={<Register></Register>}></Route>
+				<Route path="/login" element={<LoginAndREegister />}>
+
+
+					<Route index element={<Login />}></Route>
+					<Route path="register" element={<Register></Register>}></Route>
+				</Route>
 
 				<Route
 					path="/appointment"
@@ -33,7 +41,10 @@ function App() {
 							<Deshboard></Deshboard>
 						</RequireAuth>
 					}
-				></Route>
+				>
+					<Route index element={<AvialbleAppointment />}></Route>
+					<Route path="history" element={<History />}></Route>
+				</Route>
 			</Routes>
 			<ToastContainer></ToastContainer>
 		</div>

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init'
+import useToken from '../../hooks/useToken';
 import Spinner from '../Shared/Spinner';
 
 const Register = () => {
-    const [signInWithGoogle, Googleuser, Googleloading] = useSignInWithGoogle(auth);
     const [updateProfile, updating] = useUpdateProfile(auth);
+    const navigate = useNavigate()
     const [userName, setUserName] = useState('')
     const [
         createUserWithEmailAndPassword,
@@ -14,10 +15,15 @@ const Register = () => {
         loading,
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
+    const [token] = useToken(user)
+    if (token) {
+        navigate('/')
+    }
+
     const handleName = (event) => {
         setUserName(event.target.value)
     }
-    if (Googleloading || updating || loading) {
+    if (updating || loading) {
         return <Spinner></Spinner>
     }
     let errors
@@ -33,14 +39,14 @@ const Register = () => {
         await createUserWithEmailAndPassword(email, password)
         event.target.reset()
     }
-    const signWithGoogle = () => {
-        signInWithGoogle()
-    }
+    // const signWithGoogle = () => {
+    //     signInWithGoogle()
+    // }
 
     return (
         <div>
 
-            <h3 className='text-2xl text-center py-5 text-secondary font-bold'>Please Register </h3>
+            {/* <h3 className='text-2xl text-center py-5 text-secondary font-bold'>Please Register </h3> */}
 
             <div className='w-[50%] mx-auto m-5'  >
                 <div className='card bg-base-100 shadow-xl '>
@@ -62,10 +68,10 @@ const Register = () => {
                     </form>
                     <p className='p-5'>Alredy have an accound ? <Link to='/login' className='text-primary '>Login here</Link></p>
                     <div class="divider">OR</div>
-                    <div className='p-5'>
+                    {/* <div className='p-5'>
 
                         <button onClick={signWithGoogle} className='btn btn-secondary w-[100%] '>sign In with google</button>
-                    </div>
+                    </div> */}
                 </div>
 
             </div>

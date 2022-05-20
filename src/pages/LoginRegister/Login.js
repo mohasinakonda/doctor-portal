@@ -3,8 +3,8 @@ import auth from '../../firebase.init'
 import { useSignInWithGoogle, useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import Spinner from '../Shared/Spinner';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import useToken from '../../hooks/useToken';
 const Login = () => {
-    const [signInWithGoogle, gooleUser, googleLoading,] = useSignInWithGoogle(auth);
     const navigate = useNavigate()
     const [
         createUserWithEmailAndPassword,
@@ -12,18 +12,21 @@ const Login = () => {
         loading,
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
+    const [token] = useToken(user)
+
     const location = useLocation()
     let from = location.state?.from?.pathname || "/";
-    if (loading || googleLoading) {
+    if (loading) {
         return <Spinner />
     }
-    if (user || gooleUser) {
+
+    if (token) {
         navigate(from, { replace: true });
     }
 
-    const signWithGoogle = () => {
-        signInWithGoogle()
-    }
+    // const signWithGoogle = () => {
+    //     signInWithGoogle()
+    // }
     const signInPassword = (event) => {
 
         event.preventDefault()
@@ -35,7 +38,7 @@ const Login = () => {
     return (
         <div>
 
-            <h3 className='text-2xl text-center py-5 text-secondary font-bold'>Please Login</h3>
+            {/* <h3 className='text-2xl text-center py-5 text-secondary font-bold'>Please Login</h3> */}
 
             <div className='w-[50%] mx-auto m-5'  >
                 <div className='card bg-base-100 shadow-xl '>
@@ -52,10 +55,10 @@ const Login = () => {
                     </form>
                     <p className='p-5'>Need have an account? <Link to='/register' className='text-primary' >create Account</Link></p>
                     <div class="divider">OR</div>
-                    <div className='p-5'>
+                    {/* <div className='p-5'>
 
                         <button onClick={signWithGoogle} className='btn btn-secondary w-[100%] '>sign In with google</button>
-                    </div>
+                    </div> */}
                 </div>
 
             </div>
